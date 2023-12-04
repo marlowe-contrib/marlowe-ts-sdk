@@ -1,6 +1,6 @@
 {
-  "name": "@marlowe.io/language-core-v1-txpipe",
-  "version": "0.2.1-beta",
+  "name": "marlowe-language-core-v1-txpipe",
+  "version": "0.2.2-beta",
   "description": "Library to manipulate Marlowe Core contracts",
   "repository": "https://github.com/input-output-hk/marlowe-ts-sdk",
   "publishConfig": {
