@@ -1,6 +1,6 @@
 {
-  "name": "@marlowe.io/runtime-lifecycle",
-  "version": "0.2.0-beta",
+  "name": "marlowe-runtime-lifecycle-txpipe",
+  "version": "0.2.2-beta",
   "description": "Entry Point for Running remotely Marlowe Contracts over a backend instance of the runtime using a connected wallet.",
   "repository": "https://github.com/input-output-hk/marlowe-ts-sdk",
   "publishConfig": {
@@ -51,9 +51,9 @@
   "dependencies": {
     "@marlowe.io/wallet": "0.2.0-beta",
     "@marlowe.io/runtime-core": "0.2.0-beta",
-    "@marlowe.io/runtime-rest-client": "0.2.0-beta",
+    "marlowe-runtime-rest-client-txpipe": "0.2.2-beta",
     "@marlowe.io/adapter": "0.2.0-beta",
-    "@marlowe.io/language-core-v1": "0.2.0-beta",
+    "marlowe-language-core-v1-txpipe": "0.2.2-beta",
     "fp-ts": "^2.13.1",
     "io-ts": "2.2.20",
     "newtype-ts": "0.3.5",

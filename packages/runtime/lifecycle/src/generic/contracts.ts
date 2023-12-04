@@ -65,7 +65,7 @@ const submitApplyInputsTx =
 
 const getApplicableInputs =
   ({ wallet, rest }: ContractsDI) =>
-  async (contractId: ContractId, environement: Environment): Promise<Next> => {
+  async (contractId: ContractId, environment: Environment): Promise<Next> => {
     const contractDetails = await unsafeTaskEither(
       rest.contracts.contract.get(contractId)
     );
@@ -76,7 +76,7 @@ const getApplicableInputs =
         contractDetails.roleTokenMintingPolicyId
       );
       return await unsafeTaskEither(
-        rest.contracts.contract.next(contractId)(environement)(parties)
+        rest.contracts.contract.next(contractId, environment, parties)
       );
     }
   };
