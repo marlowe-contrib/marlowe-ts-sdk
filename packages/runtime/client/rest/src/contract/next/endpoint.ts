@@ -12,13 +12,12 @@ import { DecodingError } from "@marlowe.io/adapter/codec";
 import { posixTimeToIso8601 } from "@marlowe.io/adapter/time";
 
 export type GET = (
-  contractId: ContractId
-) => (
-  environment: Environment
-) => (parties: Party[]) => TE.TaskEither<Error | DecodingError, Next>;
+  contractId: ContractId,
+  environment: Environment,
+  parties: Party[]) => TE.TaskEither<Error | DecodingError, Next>;
 
 export const getViaAxios: (axiosInstance: AxiosInstance) => GET =
-  (axiosInstance) => (contractId) => (environment) => (parties) =>
+  (axiosInstance) => (contractId, environment, parties) =>
     pipe(
       HTTP.Get(axiosInstance)(
         contractNextEndpoint(contractId) +

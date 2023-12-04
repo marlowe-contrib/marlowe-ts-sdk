@@ -13,7 +13,7 @@ import * as TE from "fp-ts/lib/TaskEither.js";
 import * as O from "fp-ts/lib/Option.js";
 import { pipe } from "fp-ts/lib/function.js";
 
-import { MarloweJSONCodec } from "@marlowe.io/adapter/codec";
+import { DecodingError, MarloweJSONCodec } from "@marlowe.io/adapter/codec";
 import * as HTTP from "@marlowe.io/adapter/http";
 import { Bundle, Label } from "@marlowe.io/marlowe-object";
 
@@ -23,6 +23,7 @@ import * as Payout from "./payout/endpoints/singleton.js";
 import * as Withdrawal from "./withdrawal/endpoints/singleton.js";
 import * as Withdrawals from "./withdrawal/endpoints/collection.js";
 import * as Contract from "./contract/endpoints/singleton.js";
+import * as Next from "./contract/next/endpoint.js";
 import * as Contracts from "./contract/endpoints/collection.js";
 import * as Transaction from "./contract/transaction/endpoints/singleton.js";
 import * as Transactions from "./contract/transaction/endpoints/collection.js";
@@ -41,6 +42,9 @@ import { submitContractViaAxios } from "./contract/endpoints/singleton.js";
 import { ContractDetails } from "./contract/details.js";
 import { TransactionDetails } from "./contract/transaction/details.js";
 import { CreateContractSourcesResponse } from "./contract/endpoints/sources.js";
+import { Environment, Party } from "@marlowe.io/language-core-v1";
+import { Next as NextType } from "@marlowe.io/language-core-v1/next";
+
 // import curlirize from 'axios-curlirize';
 
 // TODO: DELETE
@@ -204,7 +208,7 @@ export interface RestClient {
    */
   healthcheck(): Promise<Boolean>;
 
-  //   getNextStepsForContract: Next.GET; // - Jamie, is it this one? https://docs.marlowe.iohk.io/api/get-transaction-output-by-id? if so lets unify
+  getNextStepsForContract: Next.GET; // - Jamie, is it this one? https://docs.marlowe.iohk.io/api/get-transaction-output-by-id? if so lets unify
 
   //   postContractSource: ContractSources.POST; // - Jamie, is it this one? https://docs.marlowe.iohk.io/api/access-contract-import if so lets unify
   //   getContractSource: ContractSource.GET; // - Jamie, is it this one? https://docs.marlowe.iohk.io/api/get-contract-import-by-id
@@ -296,6 +300,9 @@ export function mkRestClient(baseURL: string): RestClient {
       return unsafeTaskEither(
         Transaction.getViaAxios(axiosInstance)(contractId, txId)
       );
+    },
+    getNextStepsForContract(contractId, environment, parties) {
+      return Next.getViaAxios(axiosInstance)(contractId, environment, parties)
     },
     withdrawPayouts({ payoutIds, changeAddress, ...request }) {
       return unsafeTaskEither(
