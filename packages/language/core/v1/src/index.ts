@@ -43,6 +43,10 @@ export {
 } from "./contract.js";
 export { Environment, mkEnvironment, TimeInterval } from "./environment.js";
 
+export { Next } from "./next/index.js"
+
+export { partyCmp } from "./participants.js"
+
 export {
   Input,
   IDeposit,
